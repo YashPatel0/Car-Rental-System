@@ -1,3 +1,5 @@
+package com.mycompany.car_rental_system;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,6 +30,11 @@ class Car {
     public void setRented(boolean rented) {
         isRented = rented;
     }
+
+    @Override
+    public String toString() {
+        return make + " " + model + (isRented ? " (Rented)" : " (Available)");
+    }
 }
 
 class CarRentalSystem {
@@ -47,10 +54,12 @@ class CarRentalSystem {
             if (car.getMake().equals(make) && car.getModel().equals(model) && !car.isRented()) {
                 car.setRented(true);
                 System.out.println("Car rented: " + car.getMake() + " " + car.getModel());
+                displayCars();
                 return;
             }
         }
         System.out.println("Car not available for rent.");
+        displayCars();
     }
 
     public void returnCar(String make, String model) {
@@ -58,14 +67,23 @@ class CarRentalSystem {
             if (car.getMake().equals(make) && car.getModel().equals(model) && car.isRented()) {
                 car.setRented(false);
                 System.out.println("Car returned: " + car.getMake() + " " + car.getModel());
+                displayCars();
                 return;
             }
         }
         System.out.println("Car not rented or does not exist.");
+        displayCars();
+    }
+
+    public void displayCars() {
+        System.out.println("Current list of cars:");
+        for (Car car : cars) {
+            System.out.println(car);
+        }
     }
 }
 
-public class CAR_RENTAL_SYSTEM{
+public class Car_Rental_System {
     public static void main(String[] args) {
         CarRentalSystem rentalSystem = new CarRentalSystem();
 
@@ -76,6 +94,8 @@ public class CAR_RENTAL_SYSTEM{
 
         Scanner scanner = new Scanner(System.in);
 
+        rentalSystem.displayCars();
+        
         while (true) {
             System.out.println("1. Rent a car");
             System.out.println("2. Return a car");
